@@ -59,9 +59,4 @@ public class VluchtTest {
 		fail("Not yet implemented");
 	}
 	
-	@Test
-	public void nada(){
-		
-	}
-
 }
