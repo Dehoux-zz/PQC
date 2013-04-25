@@ -58,5 +58,10 @@ public class VluchtTest {
 	public void testZetAankomstTijd() {
 		fail("Not yet implemented");
 	}
+	
+	@Test
+	public void nada(){
+		
+	}
 
 }
