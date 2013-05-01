@@ -19,6 +19,9 @@ public class VluchtTest {
 	static private Vlucht vlucht;
 	static private Land nederland;
 	static private Land duitsland;
+	static private Calendar tijdV = Calendar.getInstance();
+	static private Calendar tijdA = Calendar.getInstance();
+
 	
 	@BeforeClass
 	public static void setUp() throws Exception {
@@ -29,16 +32,17 @@ public class VluchtTest {
 		luchthaven = new Luchthaven("Schiphol", "2e45", true, nederland);
 		luchthaven2 = new Luchthaven("Tegel", "2e46", true, duitsland);
 		vlucht = new Vlucht(vliegtuig, luchthaven);
-		
+		tijdV.set(2008, 1, 3, 12, 0);
+		tijdA.set(2008, 1, 3, 14, 0);
 	}
 
 	@Test (expected=VluchtException.class)
-	public void testZetIncorrecteBestemming() throws VluchtException {
+	public void test1() throws VluchtException {
 		vlucht.zetBestemming(luchthaven);
 	}
 	
 	@Test
-	public void testZetCorrecteBestemming() {
+	public void test2() {
 		try {
 			vlucht.zetBestemming(luchthaven2);
 		} catch (Exception ve) {
@@ -48,61 +52,54 @@ public class VluchtTest {
 		
 	
 	@Test (expected=VluchtException.class)
-	public void testZetIncorrecteVertrekTijd() throws VluchtException {
-		Calendar tijd = Calendar.getInstance();
-		tijd.set(2008, 2, 31, 12, 0);
-		vlucht.zetVertrekTijd(tijd);
+	public void test3() throws VluchtException {
+		tijdV.set(2008, 2, 31, 12, 0);
+		vlucht.zetVertrekTijd(tijdV);
 	}
 
 	@Test
-	public void testZetVertrekTijd1159() {
+	public void test4() {
 		try {
-			Calendar tijd = Calendar.getInstance();
-			tijd.set(2008, 1, 1, 11, 59);
-			vlucht.zetVertrekTijd(tijd);
+			tijdV.set(2008, 1, 1, 11, 59);
+			vlucht.zetVertrekTijd(tijdV);
 		} catch (VluchtException ve) {
 			fail("fout bij het zetten van de correcte tijd");
 		}
 	}
 	
 	@Test
-	public void testZetVertrekTijd1200() {
+	public void test5() {
 		try {
-			Calendar tijd = Calendar.getInstance();
-			tijd.set(2008, 1, 1, 12, 00);
-			vlucht.zetVertrekTijd(tijd);
+			tijdV.set(2008, 1, 1, 12, 00);
+			vlucht.zetVertrekTijd(tijdV);
 		} catch (VluchtException ve) {
 			fail("fout bij het zetten van de correcte tijd");
 		}
 	}
 	
 	@Test
-	public void testZetVertrekTijd1201() {
+	public void test6() {
 		try {
-			Calendar tijd = Calendar.getInstance();
-			tijd.set(2008, 2, 1, 12, 1);
-			vlucht.zetVertrekTijd(tijd);
+			tijdV.set(2008, 2, 1, 12, 1);
+			vlucht.zetVertrekTijd(tijdV);
 		} catch (VluchtException ve) {
 			fail("fout bij het zetten van de correcte tijd");
 		}
 	}
 	
 	@Test
-	public void testZetVertrekTijd12002() {
+	public void test7() {
 		try {
-			Calendar tijd = Calendar.getInstance();
-			tijd.set(2008, 2, 1, 12, 00);
-			vlucht.zetVertrekTijd(tijd);
+			tijdV.set(2008, 2, 1, 12, 00);
+			vlucht.zetVertrekTijd(tijdV);
 		} catch (VluchtException ve) {
 			fail("fout bij het zetten van de correcte tijd");
 		}
 	}
 	
 	@Test
-	public void testZetAankomstTijdVertrekTijd() {
+	public void test8() {
 		try {
-			Calendar tijdV = Calendar.getInstance();
-			Calendar tijdA = Calendar.getInstance();
 			tijdV.set(2008, 2, 1, 12, 1);
 			vlucht.zetVertrekTijd(tijdV);
 			tijdA.set(2008, 2, 1, 12, 2);
@@ -113,10 +110,8 @@ public class VluchtTest {
 	}
 	
 	@Test
-	public void testZetAankomstTijdVertrekTijdGelijk() {
+	public void test9() {
 		try {
-			Calendar tijdV = Calendar.getInstance();
-			Calendar tijdA = Calendar.getInstance();
 			tijdV.set(2008, 2, 1, 12, 1);
 			vlucht.zetVertrekTijd(tijdV);
 			tijdA.set(2008, 2, 1, 12, 1);
@@ -127,7 +122,42 @@ public class VluchtTest {
 	}
 	
 	@Test
-	public void testZetCorrecteAankomstTijd(){
-		
+	public void test10(){
+		try {
+			tijdV.set(2008, 1, 3, 12, 0);
+			vlucht.zetVertrekTijd(tijdV);
+			tijdA.set(2008, 1, 3, 14, 0);
+			vlucht.zetAankomstTijd(tijdA);
+		} catch (VluchtException ve) {
+			fail("fout bij het zetten van de correcte tijd");
+		}
 	}
+	
+	@Test (expected=VluchtException.class)
+	public void test11() throws VluchtException{
+		vlucht = new Vlucht(null, luchthaven, luchthaven2, tijdV, tijdA);	
+	}
+	
+	@Test (expected=VluchtException.class)
+	public void test12() throws VluchtException{
+		vlucht = new Vlucht(vliegtuig, null, luchthaven2, tijdV, tijdA);	
+	}
+	
+	@Test (expected=VluchtException.class)
+	public void test13() throws VluchtException{
+		vlucht = new Vlucht(vliegtuig, luchthaven, null, tijdV, tijdA);	
+	}
+	
+	@Test (expected=VluchtException.class)
+	public void test14() throws VluchtException{
+		vlucht = new Vlucht(vliegtuig, luchthaven, luchthaven2, null, tijdA);	
+	}
+	
+	@Test (expected=VluchtException.class)
+	public void test15() throws VluchtException{
+		vlucht = new Vlucht(vliegtuig, luchthaven, luchthaven2, tijdV, null);	
+	}
+	
+	
+	
 }
