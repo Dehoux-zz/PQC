@@ -75,7 +75,7 @@ public class RegVluchtController
     * Leg bestemming vast bij vlucht.
     * @roseuid 4030DD750082
     */
-   public void bestemming(String naam)
+   public void bestemming(String naam) throws VluchtException
    {
     Luchthaven eenLuchthaven = (Luchthaven)lh.get(naam);
     deVlucht.zetBestemming(eenLuchthaven);

@@ -17,6 +17,7 @@ public class VluchtTest {
 	static private Vliegtuig vliegtuig;
 	static private Luchthaven luchthaven, luchthaven2;
 	static private Vlucht vlucht;
+	static private Vlucht vluchtTest;
 	static private Land nederland;
 	static private Land duitsland;
 	static private Calendar tijdV = Calendar.getInstance();
@@ -130,32 +131,32 @@ public class VluchtTest {
 			vlucht.zetAankomstTijd(tijdA);
 		} catch (VluchtException ve) {
 			fail("fout bij het zetten van de correcte tijd");
-		}
+		} 
 	}
 	
 	@Test (expected=VluchtException.class)
 	public void test11() throws VluchtException{
-		vlucht = new Vlucht(null, luchthaven, luchthaven2, tijdV, tijdA);	
+		vluchtTest = new Vlucht(null, luchthaven, luchthaven2, tijdV, tijdA);	
 	}
 	
 	@Test (expected=VluchtException.class)
 	public void test12() throws VluchtException{
-		vlucht = new Vlucht(vliegtuig, null, luchthaven2, tijdV, tijdA);	
+		vluchtTest = new Vlucht(vliegtuig, null, luchthaven2, tijdV, tijdA);	
 	}
 	
 	@Test (expected=VluchtException.class)
 	public void test13() throws VluchtException{
-		vlucht = new Vlucht(vliegtuig, luchthaven, null, tijdV, tijdA);	
+		vluchtTest = new Vlucht(vliegtuig, luchthaven, null, tijdV, tijdA);	
 	}
 	
 	@Test (expected=VluchtException.class)
 	public void test14() throws VluchtException{
-		vlucht = new Vlucht(vliegtuig, luchthaven, luchthaven2, null, tijdA);	
+		vluchtTest = new Vlucht(vliegtuig, luchthaven, luchthaven2, null, tijdA);	
 	}
 	
 	@Test (expected=VluchtException.class)
 	public void test15() throws VluchtException{
-		vlucht = new Vlucht(vliegtuig, luchthaven, luchthaven2, tijdV, null);	
+		vluchtTest = new Vlucht(vliegtuig, luchthaven, luchthaven2, tijdV, null);	
 	}
 	
 	

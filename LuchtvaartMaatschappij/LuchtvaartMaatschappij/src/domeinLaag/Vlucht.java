@@ -45,27 +45,56 @@ public class Vlucht
    /**
    	* Constructor bedoelt om test-objecten mee aan te maken.
 	*/
-   public Vlucht(Vliegtuig vt, Luchthaven vertrekp, Luchthaven best, Calendar vertrek, Calendar aankomst)
+   public Vlucht(Vliegtuig vt, Luchthaven vertrekp, Luchthaven best, Calendar vertrek, Calendar aankomst) throws VluchtException
    {
-	this.vt = vt;
-	this.vertrekpunt = vertrekp;
-	this.bestemming = best;
-	this.vertrekTijd = (Calendar)vertrek.clone();
-	this.aankomstTijd = (Calendar) aankomst.clone();
-	alleVluchten.add(this);
+	   if(vt == null){
+		   throw new VluchtException("Geen geldig vliegtuig!");
+	   }
+	   else {
+		   this.vt = vt;
+	   }
+	   
+	   if(vertrekpunt == null){
+		   throw new VluchtException("Geen geldig vertrekpunt!");
+	   }
+	   else {
+		   this.vertrekpunt = vertrekp;
+	   }
+	   
+	   if(bestemming == null){
+		   throw new VluchtException("Geen geldig Bestemming!");
+	   }
+	   else {
+		   this.bestemming = best;
+	   }
+	   
+	   if(vertrekTijd == null){
+		   throw new VluchtException("Geen geldig Vertrekt Tijd!");
+	   }
+	   else {
+		   this.vertrekTijd = (Calendar)vertrek.clone();
+	   }
+	   
+	   if(aankomstTijd == null){
+		   throw new VluchtException("Geen geldig Aankomst Tijd!");
+	   }
+	   else {
+		   this.aankomstTijd = (Calendar) aankomst.clone();
+	   }
+		  
+	   alleVluchten.add(this);
    }
-
 
    /**
     * Controleer dat bestemming <> vertrekpunt.
     * @param bestemming
     */
-   public void zetBestemming(Luchthaven bestemming)
+   public void zetBestemming(Luchthaven bestemming) throws VluchtException
    {
-   	if(bestemming == vertrekpunt)
+   	if(bestemming != vertrekpunt)
    		this.bestemming = bestemming;
    	else
-   		throw new IllegalArgumentException("bestemming en vertrek zijn gelijk");
+   		throw new VluchtException("bestemming en vertrek zijn gelijk");
 
    }
 
