@@ -1,0 +1,10 @@
+	public void testBestemming(){
+		try{
+			vlucht.zetBestemming(bestemming);
+		}catch(Exception e){
+			assertEquals()
+		}
+		
+		
+		
+	}

@@ -4,22 +4,24 @@ import static org.junit.Assert.*;
 
 import java.util.Calendar;
 
+import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import domeinLaag.*;
 
 public class VluchtTest {
 
-	private LuchtvaartMaatschappij lvm;
-	private Vliegtuig vliegtuig;
-	private Luchthaven luchthaven, luchthaven2;
-	private Vlucht vlucht;
-	private Land nederland;
-	private Land duitsland;
+	static private LuchtvaartMaatschappij lvm;
+	static private Vliegtuig vliegtuig;
+	static private Luchthaven luchthaven, luchthaven2;
+	static private Vlucht vlucht;
+	static private Land nederland;
+	static private Land duitsland;
 	
-	@Before
-	public void setUp() throws Exception {
+	@BeforeClass
+	public static void setUp() throws Exception {
 		lvm = new LuchtvaartMaatschappij("KLM");
 		vliegtuig = new Vliegtuig(lvm);
 		nederland = new Land("Nederland", 11);
@@ -30,19 +32,17 @@ public class VluchtTest {
 		
 	}
 
-	@Test (expected=IllegalArgumentException.class)
+	@Test (expected=VluchtException.class)
 	public void testZetIncorrecteBestemming() throws VluchtException {
-		luchthaven2.zetNaam("Schiphol");
-		vlucht.zetBestemming(luchthaven2);
+		vlucht.zetBestemming(luchthaven);
 	}
 	
 	@Test
 	public void testZetCorrecteBestemming() {
 		try {
-			luchthaven2.zetNaam("Tegel");
 			vlucht.zetBestemming(luchthaven2);
-		} catch (IllegalArgumentException ve) {
-			fail("fout bij het zetten van de correcte bestemming");
+		} catch (Exception ve) {
+			assertEquals(new VluchtException("Bestemming en vertrek zijn geliijk"), ve);
 		}
 	}
 		
@@ -55,8 +55,79 @@ public class VluchtTest {
 	}
 
 	@Test
-	public void testZetAankomstTijd() {
-		fail("Not yet implemented");
+	public void testZetVertrekTijd1159() {
+		try {
+			Calendar tijd = Calendar.getInstance();
+			tijd.set(2008, 1, 1, 11, 59);
+			vlucht.zetVertrekTijd(tijd);
+		} catch (VluchtException ve) {
+			fail("fout bij het zetten van de correcte tijd");
+		}
 	}
 	
+	@Test
+	public void testZetVertrekTijd1200() {
+		try {
+			Calendar tijd = Calendar.getInstance();
+			tijd.set(2008, 1, 1, 12, 00);
+			vlucht.zetVertrekTijd(tijd);
+		} catch (VluchtException ve) {
+			fail("fout bij het zetten van de correcte tijd");
+		}
+	}
+	
+	@Test
+	public void testZetVertrekTijd1201() {
+		try {
+			Calendar tijd = Calendar.getInstance();
+			tijd.set(2008, 2, 1, 12, 1);
+			vlucht.zetVertrekTijd(tijd);
+		} catch (VluchtException ve) {
+			fail("fout bij het zetten van de correcte tijd");
+		}
+	}
+	
+	@Test
+	public void testZetVertrekTijd12002() {
+		try {
+			Calendar tijd = Calendar.getInstance();
+			tijd.set(2008, 2, 1, 12, 00);
+			vlucht.zetVertrekTijd(tijd);
+		} catch (VluchtException ve) {
+			fail("fout bij het zetten van de correcte tijd");
+		}
+	}
+	
+	@Test
+	public void testZetAankomstTijdVertrekTijd() {
+		try {
+			Calendar tijdV = Calendar.getInstance();
+			Calendar tijdA = Calendar.getInstance();
+			tijdV.set(2008, 2, 1, 12, 1);
+			vlucht.zetVertrekTijd(tijdV);
+			tijdA.set(2008, 2, 1, 12, 2);
+			vlucht.zetAankomstTijd(tijdA);
+		} catch (VluchtException ve) {
+			fail("fout bij het zetten van de correcte tijd");
+		}
+	}
+	
+	@Test
+	public void testZetAankomstTijdVertrekTijdGelijk() {
+		try {
+			Calendar tijdV = Calendar.getInstance();
+			Calendar tijdA = Calendar.getInstance();
+			tijdV.set(2008, 2, 1, 12, 1);
+			vlucht.zetVertrekTijd(tijdV);
+			tijdA.set(2008, 2, 1, 12, 1);
+			vlucht.zetAankomstTijd(tijdA);
+		} catch (VluchtException ve) {
+			fail("fout bij het zetten van de correcte tijd");
+		}
+	}
+	
+	@Test
+	public void testZetCorrecteAankomstTijd(){
+		
+	}
 }
