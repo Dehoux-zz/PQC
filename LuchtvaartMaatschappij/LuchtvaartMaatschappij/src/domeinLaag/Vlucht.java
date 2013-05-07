@@ -104,23 +104,25 @@ public class Vlucht
     */
    public void zetVertrekTijd(Calendar tijd) throws VluchtException
    {
-	Calendar vTijd = tijd;
-	vTijd.setLenient(false);
-	// Ter controle of het een juiste datum is. Gebeurt niet bij het zetten, maar bij het getten.
-	try {
-		Date datum = vTijd.getTime();
-	} catch (IllegalArgumentException e){
-		throw new VluchtException("Geen geldige datum!");
-	}
-   	if(!Vlucht.isBezet(vt,vTijd)){
-   		vertrekTijd = (Calendar) vTijd.clone();
-   	}
-   	else
-   		throw new VluchtException("vliegtuig reeds bezet op " + tijd.getTime());
+	   Calendar vTijd;
+	   vTijd = tijd;
+	   vTijd.setLenient(false);
+
+	   // Ter controle of het een juiste datum is. Gebeurt niet bij het zetten, maar bij het getten.
+	   try {
+		   Date datum = vTijd.getTime();
+	   } catch (IllegalArgumentException e){
+		   throw new VluchtException("Geen geldige datum!");
+	   }
+	   if(!Vlucht.isBezet(vt,vTijd)){
+		   vertrekTijd = (Calendar) vTijd.clone();
+	   }
+	   else
+		   throw new VluchtException("vliegtuig reeds bezet op " + tijd.getTime());
    }
 
    public Calendar getVertrekTijd(){
-   	return vertrekTijd;
+	   return vertrekTijd;
    }
 
    /**
@@ -137,7 +139,7 @@ public class Vlucht
 	} catch (IllegalArgumentException e){
 		throw new VluchtException("Geen geldige datum!");
 	}
-    if(aTijd.before(vertrekTijd))
+    if(!aTijd.before(vertrekTijd))
     	aankomstTijd = (Calendar) aTijd.clone();
    	else
    		throw new VluchtException("aankomsttijd voor vertrektijd");
