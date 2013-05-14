@@ -54,14 +54,14 @@ public class VluchtTest {
 	
 	@Test (expected=VluchtException.class)
 	public void test3() throws VluchtException {
-		tijdV.set(2008, 2, 31, 12, 0);
+		tijdV.set(2008, 1, 31, 12, 0);
 		vlucht.zetVertrekTijd(tijdV);
 	}
 
 	@Test
 	public void test4() {
 		try {
-			tijdV.set(2008, 1, 1, 11, 59);
+			tijdV.set(2008, 0, 1, 11, 59);
 			vlucht.zetVertrekTijd(tijdV);
 		} catch (VluchtException ve) {
 			fail("fout bij het zetten van de correcte tijd");
@@ -71,7 +71,7 @@ public class VluchtTest {
 	@Test
 	public void test5() {
 		try {
-			tijdV.set(2008, 1, 1, 12, 00);
+			tijdV.set(2008, 0, 1, 12, 00);
 			vlucht.zetVertrekTijd(tijdV);
 		} catch (VluchtException ve) {
 			fail("fout bij het zetten van de correcte tijd");
@@ -81,7 +81,7 @@ public class VluchtTest {
 	@Test
 	public void test6() {
 		try {
-			tijdV.set(2008, 2, 1, 12, 1);
+			tijdV.set(2008, 1, 1, 12, 1);
 			vlucht.zetVertrekTijd(tijdV);
 		} catch (VluchtException ve) {
 			fail("fout bij het zetten van de correcte tijd");
@@ -91,7 +91,7 @@ public class VluchtTest {
 	@Test
 	public void test7() {
 		try {
-			tijdV.set(2008, 2, 1, 12, 00);
+			tijdV.set(2008, 1, 1, 12, 00);
 			vlucht.zetVertrekTijd(tijdV);
 		} catch (VluchtException ve) {
 			fail("fout bij het zetten van de correcte tijd");
@@ -101,7 +101,7 @@ public class VluchtTest {
 	@Test
 	public void test8() {
 		try {
-			tijdV.set(2008, 2, 1, 12, 1);
+			tijdV.set(2008, 1, 1, 12, 1);
 			vlucht.zetVertrekTijd(tijdV);
 			tijdA.set(2008, 2, 1, 12, 2);
 			vlucht.zetAankomstTijd(tijdA);
@@ -113,9 +113,9 @@ public class VluchtTest {
 	@Test
 	public void test9() {
 		try {
-			tijdV.set(2008, 2, 1, 12, 1);
+			tijdV.set(2008, 1, 1, 12, 1);
 			vlucht.zetVertrekTijd(tijdV);
-			tijdA.set(2008, 2, 1, 12, 1);
+			tijdA.set(2008, 1, 1, 12, 1);
 			vlucht.zetAankomstTijd(tijdA);
 		} catch (VluchtException ve) {
 			fail("fout bij het zetten van de correcte tijd");
@@ -125,7 +125,7 @@ public class VluchtTest {
 	@Test
 	public void test10(){
 		try {
-			tijdV.set(2008, 1, 3, 12, 0);
+			tijdV.set(2008, 0, 3, 12, 0);
 			vlucht.zetVertrekTijd(tijdV);
 			tijdA.set(2008, 1, 3, 14, 0);
 			vlucht.zetAankomstTijd(tijdA);

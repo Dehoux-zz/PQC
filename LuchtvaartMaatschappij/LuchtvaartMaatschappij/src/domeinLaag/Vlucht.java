@@ -107,14 +107,6 @@ public class Vlucht
 	   Calendar vTijd;
 	   vTijd = tijd;
 	   vTijd.setLenient(false);
-	   
-	   if (vTijd.MONTH == 1){
-		   System.out.println(vTijd.MONTH);
-		   if (vTijd.DAY_OF_MONTH > 27){
-			   System.out.println("TEST2");
-			   throw new VluchtException("Geen geldige datum!");
-		   }
-	   }
 
 	   // Ter controle of het een juiste datum is. Gebeurt niet bij het zetten, maar bij het getten.
 	   try {
